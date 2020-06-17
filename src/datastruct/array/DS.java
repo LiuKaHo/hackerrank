@@ -1,4 +1,4 @@
-package datastruct;
+package datastruct.array;
 
 import java.io.*;
 import java.math.*;
