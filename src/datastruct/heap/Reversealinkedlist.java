@@ -69,4 +69,21 @@ public class Reversealinkedlist {
 
         return movingPoint;
     }
+
+    // 1 -> 2 -> 3
+    // to
+    // 1 <- 2 <- 3
+    static SinglyLinkedListNode reverse2(SinglyLinkedListNode head) {
+        if (head == null || head.next == null){
+            return head;
+        }
+
+        SinglyLinkedListNode remaining = reverse2(head.next);
+
+        head.next.next = head;
+        head.next = null;
+
+        return remaining;
+
+    }
 }
