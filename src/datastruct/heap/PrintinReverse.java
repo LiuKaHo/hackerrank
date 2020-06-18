@@ -52,18 +52,9 @@ public class PrintinReverse {
 
 
     static void reversePrint(SinglyLinkedListNode head) {
-        SinglyLinkedListNode movingPoint = null;
-        SinglyLinkedListNode next = null;
-        while(head != null) {
-            movingPoint = new SinglyLinkedListNode(head.data);
-            movingPoint.next = next;
-            next = movingPoint;
-            head = head.next;
-        }
-
-        while(movingPoint != null){
-            System.out.println(movingPoint.data);
-            movingPoint = movingPoint.next;
+        if (head != null) {
+            reversePrint(head.next);
+            System.out.println(head.data);
         }
     }
 }
