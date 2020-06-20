@@ -20,7 +20,7 @@ public class SwapNodesAlgo {
          * Write your code here.
          */
 
-        Map<Integer, List<Node>> deep = new HashMap<>();
+        Map<Integer, List<Node>> nodeDepth = new HashMap<>();
 
 
         Node root = new Node(1);
@@ -28,19 +28,21 @@ public class SwapNodesAlgo {
         nodeQueue.offer(root);
         List<Node> nodes = new ArrayList<>();
         nodes.add(root);
-        deep.put(1, nodes);
+        nodeDepth.put(1, nodes);
 
-        int tempDeep = 2;
+        int depth = 2;
         int nextLine = 0;
         int notNegative = 0;
         int nodesNum = 1;
+
+        //generate tree and calculator tree's depth and nodes number
         for (int i = 0; i < indexes.length; i++){
             Node temp = nodeQueue.poll();
             if (temp == null){
                 break;
             }
 
-            List<Node> tempNodes = deep.containsKey(tempDeep) ? deep.get(tempDeep) : new ArrayList<>();
+            List<Node> tempNodes = nodeDepth.containsKey(depth) ? nodeDepth.get(depth) : new ArrayList<>();
 
             if (indexes[i][0] != -1){
                 Node left = new Node(indexes[i][0]);
@@ -61,12 +63,12 @@ public class SwapNodesAlgo {
                 nodesNum++;
             }
 
-            deep.put(tempDeep, tempNodes);
+            nodeDepth.put(depth, tempNodes);
 
             if (i == nextLine && notNegative != 0){
                  nextLine+=notNegative;
                  notNegative=0;
-                 tempDeep ++;
+                depth ++;
             }
         }
 
@@ -74,17 +76,11 @@ public class SwapNodesAlgo {
 
         int[][] res = new int[queries.length][nodesNum];
 
-        List<Integer> resTemp = inOrder(root, new ArrayList<>());
-
-        resTemp.forEach(e -> {
-            System.out.printf("%d ", e);
-        });
-
         for (int i = 0; i < queries.length; i++){
-
             int times = 1;
-            while(queries[i]*times < tempDeep) {
-                for (Node node : deep.get(queries[i]*times)) {
+            //swap nodes
+            while(queries[i]*times < depth) {
+                for (Node node : nodeDepth.get(queries[i]*times)) {
                     Node temp = node.right;
                     node.right = node.left;
                     node.left = temp;
